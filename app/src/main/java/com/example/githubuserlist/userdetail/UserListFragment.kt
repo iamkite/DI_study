@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.githubuserlist.R
+import com.example.githubuserlist.databinding.UserListFragmentBinding
 
 class UserListFragment : Fragment() {
+    private var _binding: UserListFragmentBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
         fun newInstance() = UserListFragment()
@@ -20,13 +22,17 @@ class UserListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.user_list_fragment, container, false)
+        _binding = UserListFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(UserListViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
