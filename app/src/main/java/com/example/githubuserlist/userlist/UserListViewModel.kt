@@ -1,4 +1,4 @@
-package com.example.githubuserlist.userdetail
+package com.example.githubuserlist.userlist
 
 import androidx.lifecycle.ViewModel
 

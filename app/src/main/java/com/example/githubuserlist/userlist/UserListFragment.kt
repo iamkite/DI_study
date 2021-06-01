@@ -6,29 +6,29 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.githubuserlist.databinding.UserDetailFragmentBinding
+import com.example.githubuserlist.databinding.UserListFragmentBinding
 
-class UserDetailFragment : Fragment() {
-    private var _binding: UserDetailFragmentBinding? = null
+class UserListFragment : Fragment() {
+    private var _binding: UserListFragmentBinding? = null
     private val binding get() = _binding!!
 
     companion object {
-        fun newInstance() = UserDetailFragment()
+        fun newInstance() = UserListFragment()
     }
 
-    private lateinit var viewModel: UserDetailViewModel
+    private lateinit var viewModel: UserListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = UserDetailFragmentBinding.inflate(inflater, container, false)
+        _binding = UserListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(UserDetailViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(UserListViewModel::class.java)
     }
 
     override fun onDestroyView() {
