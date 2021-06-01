@@ -3,7 +3,7 @@ package com.example.githubuserlist
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.githubuserlist.databinding.ActivityMainBinding
-import com.example.githubuserlist.userdetail.UserListFragment
+import com.example.githubuserlist.userlist.UserListFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
