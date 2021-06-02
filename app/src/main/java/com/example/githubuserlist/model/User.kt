@@ -6,7 +6,7 @@ data class User (
     val login : String,
     val id : Int,
     val nodeId : String,
-    val avatarUrl : String,
+    val avatarUrl : String?,
     val gravatarId : String,
     val url : String,
     val htmlUrl : String,
