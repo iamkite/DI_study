@@ -7,6 +7,7 @@ import com.example.githubuserlist.Event
 import com.example.githubuserlist.api.GitHubApiClient
 import com.example.githubuserlist.model.User
 import com.example.githubuserlist.reactive.DisposeBag
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class UserListViewModel : ViewModel() {
@@ -35,6 +36,7 @@ class UserListViewModel : ViewModel() {
         disposeBag.add(
             apiClient.getUserList(0, 30)
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess {
                     if (!it.isSuccessful || it.body() == null) {
                         _showError.value = Event(true)
