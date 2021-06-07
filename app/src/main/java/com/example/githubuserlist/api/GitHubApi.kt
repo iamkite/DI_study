@@ -9,13 +9,11 @@ import retrofit2.http.Query
 
 interface GitHubApi {
 
-
     @GET("/users")
     fun getUserList(
         @Header("accept") accept : String,
         @Query("since") since : Long?,
         @Query("per_page") perPage : Int?
     ) : Single<Response<List<User>>>
-
 
 }

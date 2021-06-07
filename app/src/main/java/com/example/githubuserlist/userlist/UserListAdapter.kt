@@ -9,8 +9,9 @@ import com.bumptech.glide.Glide
 import com.example.githubuserlist.R
 import com.example.githubuserlist.databinding.UserListItemBinding
 import com.example.githubuserlist.model.User
+import javax.inject.Inject
 
-class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
+class UserListAdapter @Inject constructor(private val context: Context) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
     var list : ArrayList<User> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

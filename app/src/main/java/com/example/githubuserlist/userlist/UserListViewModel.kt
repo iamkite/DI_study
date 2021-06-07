@@ -9,15 +9,14 @@ import com.example.githubuserlist.model.User
 import com.example.githubuserlist.reactive.DisposeBag
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class UserListViewModel : ViewModel() {
+class UserListViewModel @Inject constructor(val apiClient: GitHubApiClient) : ViewModel() {
 
-    private val apiClient = GitHubApiClient.create()
     private val disposeBag = DisposeBag()
 
-
     private val _userList = MutableLiveData<List<User>>()
-    val userList : LiveData<List<User>> get() = _userList
+    val userList: LiveData<List<User>> get() = _userList
 
     private val _showError = MutableLiveData<Event<Boolean>>()
     val showError: LiveData<Event<Boolean>> get() = _showError
@@ -30,7 +29,6 @@ class UserListViewModel : ViewModel() {
         disposeBag.dispose()
         super.onCleared()
     }
-
 
     private fun requestUserList() {
         disposeBag.add(
