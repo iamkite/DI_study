@@ -24,7 +24,7 @@ class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapt
 
         holder.binding.userName.text = user.login
 
-        user.avatarUrl?.let {
+        user.avatar_url?.let {
             Glide.with(context)
                 .load(it)
                 .into(holder.binding.userImage)

@@ -5,22 +5,22 @@ import com.example.githubuserlist.Constants
 data class User (
     val login : String,
     val id : Int,
-    val nodeId : String,
-    val avatarUrl : String?,
-    val gravatarId : String,
+    val node_id : String,
+    val avatar_url : String?,
+    val gravatar_id : String,
     val url : String,
-    val htmlUrl : String,
-    val followersUrl : String,
-    val followingUrl : String,
-    val gistsUrl : String,
-    val starredUrl : String,
-    val subscriptionsUrl : String,
-    val organizationsUrl : String,
-    val reposUrl : String,
-    val eventsUrl : String,
-    val receivedEventsUrl : String,
+    val html_url : String,
+    val followers_url : String,
+    val following_url : String,
+    val gists_url : String,
+    val starred_url : String,
+    val subscriptions_url : String,
+    val organizations_url : String,
+    val repos_url : String,
+    val events_url : String,
+    val received_events_url : String,
     val type : String,
-    val siteAdmin : Boolean
+    val site_admin : Boolean
 ) {
     val isUser get() = type == Constants.user
 }
