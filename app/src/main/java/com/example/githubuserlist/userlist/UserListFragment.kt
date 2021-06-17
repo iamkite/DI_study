@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubuserlist.EventObserver
@@ -23,11 +24,14 @@ class UserListFragment : Fragment() {
     lateinit var adapter: UserListAdapter
 
     @Inject
-    lateinit var viewModel: UserListViewModel
+    lateinit var viewModelFactory: UserListViewModel.Factory
+
+    private lateinit var viewModel: UserListViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as MyApplication).appComponent.inject(this)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(UserListViewModel::class.java)
     }
 
     override fun onCreateView(

@@ -3,6 +3,7 @@ package com.example.githubuserlist.userlist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.githubuserlist.Event
 import com.example.githubuserlist.api.GitHubApiClient
 import com.example.githubuserlist.model.User
@@ -11,7 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class UserListViewModel @Inject constructor(val apiClient: GitHubApiClient) : ViewModel() {
+class UserListViewModel(private val apiClient: GitHubApiClient) : ViewModel() {
 
     private val disposeBag = DisposeBag()
 
@@ -48,6 +49,14 @@ class UserListViewModel @Inject constructor(val apiClient: GitHubApiClient) : Vi
                 }
                 .subscribe()
         )
+    }
+
+    class Factory @Inject constructor(
+        private val apiClient: GitHubApiClient
+    ): ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return UserListViewModel(apiClient) as T
+        }
     }
 
 }
