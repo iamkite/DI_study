@@ -7,6 +7,9 @@ import com.example.githubuserlist.dagger.DaggerApplicationComponent
 import io.reactivex.plugins.RxJavaPlugins
 
 class MyApplication: Application() {
+
+    var token: String? = null
+
     override fun onCreate() {
         super.onCreate()
         initRxJava()
