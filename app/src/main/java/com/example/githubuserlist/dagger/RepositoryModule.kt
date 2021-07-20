@@ -3,6 +3,7 @@ package com.example.githubuserlist.dagger
 import com.example.githubuserlist.Constants
 import com.example.githubuserlist.api.GitHubApi
 import com.example.githubuserlist.api.OAuthApi
+import com.example.githubuserlist.util.SchedulerProvider
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -44,4 +45,8 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideOAuthApi(@Named(Constants.oAuth) retrofit: Retrofit): OAuthApi = retrofit.create(OAuthApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideScheduler() : SchedulerProvider = SchedulerProvider()
 }

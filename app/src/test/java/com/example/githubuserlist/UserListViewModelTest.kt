@@ -6,7 +6,9 @@ import com.example.githubuserlist.api.OAuthApiClient
 import com.example.githubuserlist.model.AccessToken
 import com.example.githubuserlist.model.User
 import com.example.githubuserlist.userlist.UserListViewModel
+import com.example.githubuserlist.util.SchedulerProvider
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -20,9 +22,6 @@ import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class UserListViewModelTest {
-//
-//    @get:Rule
-//    var rule: MockitoRule = MockitoJUnit.rule()
 
     @JvmField
     @Rule
@@ -37,18 +36,24 @@ class UserListViewModelTest {
     @InjectMocks
     lateinit var userListViewModel: UserListViewModel
 
-    val userList = listOf<User>()
-    val accessToken = AccessToken("","","")
+    @Mock
+    lateinit var schedulerProvider: SchedulerProvider
+
+    private val userList = listOf<User>()
+    private val accessToken = AccessToken("","","")
 
     @Before
     fun initMocks() {
-        userListViewModel = UserListViewModel(gitHubApiClient, oAuthApiClient)
+        userListViewModel = UserListViewModel(gitHubApiClient, oAuthApiClient, schedulerProvider)
     }
 
     @Test
     fun request_user_list_success_empty() {
         `when`(gitHubApiClient.getUserList(anyLong(), anyInt(), anyString()))
             .thenReturn(Single.just(Response.success(userList)))
+        `when`(schedulerProvider.io()).thenReturn(Schedulers.trampoline())
+        `when`(schedulerProvider.main()).thenReturn(Schedulers.trampoline())
+
         userListViewModel.requestUserList("")
         Assert.assertEquals(userListViewModel.userList.getOrAwaitValue(), userList)
     }
@@ -57,6 +62,10 @@ class UserListViewModelTest {
     fun request_access_token_success() {
         `when`(oAuthApiClient.getAccessToken(anyString()))
             .thenReturn(Single.just(Response.success(accessToken)))
+        `when`(schedulerProvider.io()).thenReturn(Schedulers.trampoline())
+        `when`(schedulerProvider.main()).thenReturn(Schedulers.trampoline())
+
+        userListViewModel.requestAccessToken("")
         Assert.assertEquals(userListViewModel.accessToken.getOrAwaitValue(), accessToken)
     }
 }

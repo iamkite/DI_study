@@ -10,13 +10,15 @@ import com.example.githubuserlist.api.OAuthApiClient
 import com.example.githubuserlist.model.AccessToken
 import com.example.githubuserlist.model.User
 import com.example.githubuserlist.reactive.DisposeBag
+import com.example.githubuserlist.util.SchedulerProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class UserListViewModel(
     private val gitHubApiClient: GitHubApiClient,
-    private val oAuthApiClient: OAuthApiClient
+    private val oAuthApiClient: OAuthApiClient,
+    private val schedulerProvider: SchedulerProvider
 ) : ViewModel() {
 
     private val disposeBag = DisposeBag()
@@ -38,8 +40,8 @@ class UserListViewModel(
     fun requestUserList(token: String?) {
         disposeBag.add(
             gitHubApiClient.getUserList(0, 30, token)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.main())
                 .doOnSuccess {
                     if (!it.isSuccessful || it.body() == null) {
                         _showError.value = Event(true)
@@ -60,8 +62,8 @@ class UserListViewModel(
     ) {
         disposeBag.add(
             oAuthApiClient.getAccessToken(code)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.main())
                 .doOnSuccess {
                     if (!it.isSuccessful || it.body() == null) {
                         _showError.value = Event(true)
@@ -79,10 +81,11 @@ class UserListViewModel(
 
     class Factory @Inject constructor(
         private val gitHubApiClient: GitHubApiClient,
-        private val oAuthApiClient: OAuthApiClient
+        private val oAuthApiClient: OAuthApiClient,
+        private val schedulerProvider: SchedulerProvider
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return UserListViewModel(gitHubApiClient, oAuthApiClient) as T
+            return UserListViewModel(gitHubApiClient, oAuthApiClient, schedulerProvider) as T
         }
     }
 
